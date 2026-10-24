@@ -16,3 +16,14 @@ forge test -vv       # task 4 (needs Foundry; on macOS also `brew install libusb
 | 3. Payment events + split | `src/payments.ts` | `test/payments.test.ts` |
 | 4. Cumulative claim contract | `contracts/KXTDistributor.sol` | `test/KXTDistributor.t.sol` |
 | 5. Networking and ops | `ANSWERS.md` | |
+
+## Deploy
+
+```sh
+cast wallet import deployer --interactive   # once, stores the key encrypted
+forge create contracts/KXTDistributor.sol:KXTDistributor \
+  --rpc-url https://forno.celo.org --account deployer --broadcast \
+  --constructor-args <KXT_TOKEN> <ADMIN_SAFE>
+```
+
+The admin then grants `ROOT_SETTER_ROLE` and `PAUSER_ROLE` (see ANSWERS.md, Task 4), and the contract is funded with KXT before the first root is set.
