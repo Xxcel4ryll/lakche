@@ -43,7 +43,7 @@ export class UsageLedger {
   private readonly servedByKit = new Map<string, bigint>();
   private readonly usedByUser = new Map<string, bigint>();
 
-  /** Returns the NEW bytes counted from this packet (0n if nothing new). */
+  /** Returns the bytes this packet adds to the totals (0n if nothing new). */
   ingest(p: AcctPacket): bigint {
     const input = toBytes(p.inputOctets, p.inputGigawords);
     const output = toBytes(p.outputOctets, p.outputGigawords);

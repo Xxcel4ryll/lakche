@@ -60,11 +60,11 @@ export function verifySignature(rawBody: Buffer, signatureHex: string, secret: s
 // 3b
 
 /**
- * Activation is tied to the transition into PAID, which can happen once per order, so effects are
- * exactly-once by construction; providerTxnIds additionally stops a retried event from being
- * re-processed (and re-flagged). The caller saves the returned order with a compare-and-set on the
- * version it read and writes the effects to an outbox in the same transaction, so two concurrent
- * deliveries cannot both win.
+ * Activation is tied to the transition into PAID, which can only happen once per order, so the
+ * effects are emitted once. providerTxnIds also stops a retried event from being re-processed (and
+ * re-flagged). The caller saves the returned order with a compare-and-set on the version it read
+ * and writes the effects to an outbox in the same transaction, so two concurrent deliveries cannot
+ * both win.
  */
 export function applyPaymentEvent(order: Order, ev: PaymentEvent): { order: Order; effects: Effect[] } {
   if (ev.reference !== order.reference) {
