@@ -1,0 +1,13 @@
+[profile.default]
+src = "contracts"
+test = "test"
+out = "out"
+libs = ["node_modules"]
+solc_version = "0.8.24"
+remappings = [
+  "@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/",
+  "forge-std/=node_modules/forge-std/src/",
+]
+
+[fuzz]
+runs = 1000
